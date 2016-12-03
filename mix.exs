@@ -27,7 +27,8 @@ defmodule Discuss.Mixfile do
         :phoenix_ecto,
         :phoenix_html,
         :phoenix_pubsub,
-        :postgrex
+        :postgrex,
+        :ueberauth_github
       ]
     ]
   end
