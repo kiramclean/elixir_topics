@@ -4,6 +4,7 @@ defmodule Discuss.TopicController do
   alias Discuss.Topic
 
   plug Discuss.Plugs.RequireAuth when action in [:new, :create, :edit, :update, :delete]
+  plug :check_topic_owner when action in [:update, :edit, :delete]
 
   def index(conn, _params) do
     render conn, "index.html", topics: Repo.all(Topic)
@@ -56,5 +57,18 @@ defmodule Discuss.TopicController do
     conn
     |> put_flash(:info, "Topic Deleted")
     |> redirect(to: topic_path(conn, :index))
+  end
+
+  defp check_topic_owner(conn, _params) do
+    %{params: %{"id" => topic_id}} = conn
+
+    if Repo.get(Topic, topic_id).user_id == conn.assigns.user.id do
+      conn
+    else
+      conn
+      |> put_flash(:error, "You are not allowed to touch that")
+      |> redirect(to: topic_path(conn, :index))
+      |> halt
+    end
   end
 end
