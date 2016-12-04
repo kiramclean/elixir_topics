@@ -1,8 +1,13 @@
-/* This file is for your main application css. */
-
 .help-block {
   color: red;
   text-transform: capitalize;
   position: relative;
   top: -15px;
+}
+
+.alert {
+  background-color: lightgrey;
+  padding: 10px 15px;
+  border-radius: 2px;
+  margin-top: 20px;
 }
